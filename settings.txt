@@ -1,0 +1,53 @@
+## Settings that define ProhibitedPolygonRwp movement with one group of nodes.
+
+Scenario.name = ProhibitedPolygon1
+Scenario.endTime = 36000
+Scenario.updateInterval = 0.1
+Scenario.simulateConnections = false
+Scenario.nrofHostGroups = 3
+
+MovementModel.worldSize = 3000,3000
+Events.nrof = 0
+
+Group1.groupID = healthy
+Group1.nrofHosts = 90
+Group1.nrofInterfaces = 1
+Group1.interface1 = myInterface
+Group1.movementModel = ProhibitedPolygonRwp
+Group1.routeType = 1
+Group1.router = PassiveRouter
+
+Group2.groupID = infected
+Group2.nrofHosts = 10
+Group2.nrofInterfaces = 1
+Group2.interface1 = myInterface
+Group2.movementModel = ProhibitedPolygonRwp
+Group2.routeType = 1
+Group2.router = PassiveRouter
+
+Group3.groupID = mapDrawer
+Group3.nrofHosts = 0
+Group3.nrofInterfaces = 1
+Group3.interface1 = myInterface
+Group3.movementModel = MapRouteMovement
+Group3.routeFile = data/cluster/ferryroute.wkt
+Group3.routeType = 1
+Group3.router = PassiveRouter
+
+myInterface.type = SimpleBroadcastInterface
+myInterface.transmitRange = 10
+myInterface.transmitSpeed = 1
+
+## Map based movement -movement model specific settings
+MapBasedMovement.nrofMapFiles = 1
+MapBasedMovement.mapFile1 = data/cluster/ferryroute.wkt
+
+Report.nrofReports = 1
+Report.report1 = NodeDensityReport
+Report.reportDir = reports
+
+NodeDensityReport.sampleInterval = 1200
+NodeDensityReport.outputGnuplot = true
+NodeDensityReport.xCount = 75
+NodeDensityReport.yCount = 75
+NodeDensityReport.onlyAverage = false

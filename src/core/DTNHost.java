@@ -151,6 +151,10 @@ public class DTNHost implements Comparable<DTNHost> {
 		return this.address;
 	}
 
+	public String getName() {
+		return name;
+	}
+
 	/**
 	 * Returns this hosts's ModuleCommunicationBus
 	 * @return this hosts's ModuleCommunicationBus

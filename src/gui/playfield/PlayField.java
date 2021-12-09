@@ -190,7 +190,11 @@ public class PlayField extends JPanel {
 
 		// draw hosts
 		for (DTNHost h : w.getHosts()) {
-			new NodeGraphic(h).draw(g2);
+			if (h.getName().startsWith("healthy")) {
+				new NodeGraphic(h, false).draw(g2);
+			} else if (h.getName().startsWith("infected")) {
+				new NodeGraphic(h, true).draw(g2);
+			}
 		}
 
 		// draw overlay graphics
