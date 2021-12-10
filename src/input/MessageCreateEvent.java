@@ -5,6 +5,7 @@
 package input;
 
 import core.DTNHost;
+import core.HealthStatus;
 import core.Message;
 import core.World;
 
@@ -43,6 +44,16 @@ public class MessageCreateEvent extends MessageEvent {
 
 		Message m = new Message(from, to, this.id, this.size);
 		m.setResponseSize(this.responseSize);
+		if (to.getHealthStatus() == HealthStatus.INFECTED) {
+			from.createNewMessage(m);
+			return;
+		}
+
+		to.getExposedToVirus();
+		if (to.getHealthStatus() == HealthStatus.HEALTHY) {
+			return;
+		}
+
 		from.createNewMessage(m);
 	}
 

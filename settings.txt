@@ -1,42 +1,58 @@
 ## Settings that define ProhibitedPolygonRwp movement with one group of nodes.
 
-Scenario.name = ProhibitedPolygon1
+Scenario.name = VirusSpreading
 Scenario.endTime = 36000
 Scenario.updateInterval = 0.1
-Scenario.simulateConnections = false
-Scenario.nrofHostGroups = 3
+Scenario.simulateConnections = true
+Scenario.nrofHostGroups = 4
 
 MovementModel.worldSize = 3000,3000
 Events.nrof = 0
 
-Group1.groupID = healthy
-Group1.nrofHosts = 90
-Group1.nrofInterfaces = 1
-Group1.interface1 = myInterface
-Group1.movementModel = ProhibitedPolygonRwp
-Group1.routeType = 1
-Group1.router = PassiveRouter
+myInterface.type = SimpleBroadcastInterface
+myInterface.transmitRange = 50
+myInterface.transmitSpeed = 250k
+
+Group.nrofInterfaces = 1
+Group.interface1 = myInterface
+Group.router = EpidemicRouter
+
+Group1.groupID = dest
+Group1.nrofHosts = 1
+Group1.movementModel = StationaryMovement
+Group1.nodeLocation = 0,0
+Group1.nrofInterfaces = 0
 
 Group2.groupID = infected
-Group2.nrofHosts = 10
-Group2.nrofInterfaces = 1
-Group2.interface1 = myInterface
+Group2.nrofHosts = 3
 Group2.movementModel = ProhibitedPolygonRwp
-Group2.routeType = 1
-Group2.router = PassiveRouter
 
-Group3.groupID = mapDrawer
-Group3.nrofHosts = 0
-Group3.nrofInterfaces = 1
-Group3.interface1 = myInterface
-Group3.movementModel = MapRouteMovement
-Group3.routeFile = data/cluster/ferryroute.wkt
-Group3.routeType = 1
-Group3.router = PassiveRouter
+Group3.groupID = healthy
+Group3.nrofHosts = 10
+Group3.movementModel = ProhibitedPolygonRwp
 
-myInterface.type = SimpleBroadcastInterface
-myInterface.transmitRange = 10
-myInterface.transmitSpeed = 1
+Group4.groupID = mapDrawer
+Group4.nrofHosts = 0
+Group4.movementModel = MapRouteMovement
+Group4.routeFile = data/cluster/ferryroute.wkt
+Group4.routeType = 1
+
+## Message creation parameters
+# How many event generators
+Events.nrof = 1
+# Class of the first event generator
+Events1.class = OneToEachMessageGenerator
+# (following settings are specific for the MessageEventGenerator class)
+# Creation interval in seconds (one new message every 25 to 35 seconds)
+Events1.interval = 100k,100k
+# Message sizes (50kB - 150kB)
+Events1.size = 50k,150k
+# range of message source/destination addresses
+Events1.hosts = 1,3
+Events1.toHosts = 4,13
+Events1.toHostRange = 5
+# Message ID prefix
+Events1.prefix = COV19
 
 ## Map based movement -movement model specific settings
 MapBasedMovement.nrofMapFiles = 1

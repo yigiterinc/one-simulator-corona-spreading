@@ -38,7 +38,7 @@ public class NodeGraphic extends PlayFieldGraphic {
 
 	private static Color highlightedNodeColor = Color.MAGENTA;
 
-	private DTNHost node;
+	private final DTNHost node;
 
 	public NodeGraphic(DTNHost node, boolean infected) {
 		this.node = node;
@@ -121,7 +121,7 @@ public class NodeGraphic extends PlayFieldGraphic {
 		}
 
 		if (drawNodeName) {
-			g2.setColor(hostNameColor);
+			g2.setColor(infected ? infectedHostColor : hostColor);
 			// Draw node's address next to it
 			g2.drawString(node.toString(), scale(loc.getX()),
 					scale(loc.getY()));

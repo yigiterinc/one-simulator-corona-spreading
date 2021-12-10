@@ -7,6 +7,7 @@ package core;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import movement.MovementModel;
 import movement.Path;
@@ -35,6 +36,9 @@ public class DTNHost implements Comparable<DTNHost> {
 	private List<MovementListener> movListeners;
 	private List<NetworkInterface> net;
 	private ModuleCommunicationBus comBus;
+	private HealthStatus healthStatus = HealthStatus.HEALTHY;
+	private Random random;
+	private static final double INFECTION_PROBABILITY = 0.4;
 
 	static {
 		DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -60,6 +64,11 @@ public class DTNHost implements Comparable<DTNHost> {
 		this.address = getNextAddress();
 		this.name = groupId+address;
 		this.net = new ArrayList<NetworkInterface>();
+		this.random = new Random();
+
+		if (groupId.equals("infected")) {
+			this.healthStatus = HealthStatus.INFECTED;
+		}
 
 		for (NetworkInterface i : interf) {
 			NetworkInterface ni = i.replicate();
@@ -542,4 +551,16 @@ public class DTNHost implements Comparable<DTNHost> {
 		return this.getAddress() - h.getAddress();
 	}
 
+	public void getExposedToVirus() {
+		int upperBound = 10;
+		var rand = random.nextInt(upperBound) + 1;	// Between [1,10]
+		boolean shouldGetInfected = rand <= upperBound * INFECTION_PROBABILITY;
+		if (shouldGetInfected) {
+			this.healthStatus = HealthStatus.INFECTED;
+		}
+	}
+
+	public HealthStatus getHealthStatus() {
+		return healthStatus;
+	}
 }
