@@ -34,15 +34,13 @@ public class NodeGraphic extends PlayFieldGraphic {
 	private static Color msgColor1 = Color.BLUE;
 	private static Color msgColor2 = Color.GREEN;
 	private static Color msgColor3 = Color.RED;
-	boolean infected;
 
 	private static Color highlightedNodeColor = Color.MAGENTA;
 
 	private final DTNHost node;
 
-	public NodeGraphic(DTNHost node, boolean infected) {
+	public NodeGraphic(DTNHost node) {
 		this.node = node;
-		this.infected = infected;
 	}
 
 	@Override
@@ -111,7 +109,7 @@ public class NodeGraphic extends PlayFieldGraphic {
 
 
 		/* draw node rectangle */
-		g2.setColor(infected ? infectedHostColor : hostColor);
+		g2.setColor(node.isInfected() ? infectedHostColor : hostColor);
 		g2.drawRect(scale(loc.getX()-1),scale(loc.getY()-1),
 		scale(2),scale(2));
 
@@ -121,7 +119,7 @@ public class NodeGraphic extends PlayFieldGraphic {
 		}
 
 		if (drawNodeName) {
-			g2.setColor(infected ? infectedHostColor : hostColor);
+			g2.setColor(node.isInfected() ? infectedHostColor : hostColor);
 			// Draw node's address next to it
 			g2.drawString(node.toString(), scale(loc.getX()),
 					scale(loc.getY()));
