@@ -563,4 +563,8 @@ public class DTNHost implements Comparable<DTNHost> {
 	public HealthStatus getHealthStatus() {
 		return healthStatus;
 	}
+
+	public boolean isInfected() {
+		return this.healthStatus == HealthStatus.INFECTED;
+	}
 }
