@@ -286,6 +286,7 @@ public class EventLogPanel extends JPanel
 					from, to, m);
 		}
 		else {
+			to.getExposedToVirus();
 			processEvent(msgRelayCheck, "Message relayed", from, to, m);
 		}
 	}

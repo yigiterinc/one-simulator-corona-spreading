@@ -35,8 +35,8 @@ public class Path  {
 	 */
 	public Path(Path path) {
 		this.nextWpIndex = path.nextWpIndex;
-		this.coords = new ArrayList<Coord>((ArrayList<Coord>)path.coords);
-		this.speeds = new ArrayList<Double>((ArrayList<Double>)path.speeds);
+		this.coords = new ArrayList<>(path.coords);
+		this.speeds = new ArrayList<>(path.speeds);
 	}
 
 	/**

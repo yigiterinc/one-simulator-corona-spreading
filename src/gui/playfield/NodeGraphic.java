@@ -107,7 +107,6 @@ public class NodeGraphic extends PlayFieldGraphic {
 			}
 		}
 
-
 		/* draw node rectangle */
 		g2.setColor(node.isInfected() ? infectedHostColor : hostColor);
 		g2.drawRect(scale(loc.getX()-1),scale(loc.getY()-1),

@@ -11,8 +11,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -35,6 +34,7 @@ public class PlayField extends JPanel {
 
 	private Color bgColor = Color.WHITE;
 
+	private HashMap<String, NodeGraphic> nodeGraphics = new HashMap<>();
 	private List<PlayFieldGraphic> overlayGraphics;
 	private boolean autoClearOverlay;	// automatically clear overlay graphics
 	private MapGraphic mapGraphic;
@@ -47,6 +47,7 @@ public class PlayField extends JPanel {
 	private AffineTransform curTransform;
 	private double underlayImgDx;
 	private double underlayImgDy;
+
 
 	/**
 	 * Creates a playfield
@@ -190,11 +191,9 @@ public class PlayField extends JPanel {
 
 		// draw hosts
 		for (DTNHost h : w.getHosts()) {
-			if (h.getName().startsWith("healthy")) {
-				new NodeGraphic(h, false).draw(g2);
-			} else if (h.getName().startsWith("infected")) {
-				new NodeGraphic(h, true).draw(g2);
-			}
+			NodeGraphic nodeGraphic = new NodeGraphic(h);
+			nodeGraphics.put(h.getName(), nodeGraphic);
+			nodeGraphic.draw(g2);
 		}
 
 		// draw overlay graphics
@@ -308,5 +307,9 @@ public class PlayField extends JPanel {
 		}
 
 		gui.setFocus(closest);
+	}
+
+	public Map<String, NodeGraphic> getNodeGraphics() {
+		return nodeGraphics;
 	}
 }

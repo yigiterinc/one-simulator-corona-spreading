@@ -8,10 +8,8 @@ import input.EventQueue;
 import input.ExternalEvent;
 import input.ScheduledUpdatesQueue;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * World contains all the nodes and is responsible for updating their
@@ -46,6 +44,7 @@ public class World {
 	private EventQueue nextEventQueue;
 	/** list of nodes; nodes are indexed by their network address */
 	private List<DTNHost> hosts;
+	public Map<String, DTNHost> hostByName = new HashMap<>();
 	private boolean simulateConnections;
 	/** nodes in the order they should be updated (if the order should be
 	 * randomized; null value means that the order should not be randomized) */
@@ -64,6 +63,9 @@ public class World {
 			double updateInterval, List<UpdateListener> updateListeners,
 			boolean simulateConnections, List<EventQueue> eventQueues) {
 		this.hosts = hosts;
+		for (var host : hosts) {
+			hostByName.put(host.getName(), host);
+		}
 		this.sizeX = sizeX;
 		this.sizeY = sizeY;
 		this.updateInterval = updateInterval;
@@ -93,7 +95,7 @@ public class World {
 
 		if(randomizeUpdates) {
 			// creates the update order array that can be shuffled
-			this.updateOrder = new ArrayList<DTNHost>(this.hosts);
+			this.updateOrder = new ArrayList<>(this.hosts);
 		}
 		else { // null pointer means "don't randomize"
 			this.updateOrder = null;
@@ -147,7 +149,7 @@ public class World {
 	 * Runs all external events that are due between the time when
 	 * this method is called and after one update interval.
 	 */
-	public void update () {
+	public void update() {
 		double runUntil = SimClock.getTime() + this.updateInterval;
 
 		setNextEventQueue();
