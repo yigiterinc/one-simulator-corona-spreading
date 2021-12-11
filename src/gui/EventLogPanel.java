@@ -286,9 +286,12 @@ public class EventLogPanel extends JPanel
 					from, to, m);
 		}
 		else {
-			to.getExposedToVirus();
 			processEvent(msgRelayCheck, "Message relayed", from, to, m);
 		}
+	}
+
+	public void virusTransferred(Message m, DTNHost from, DTNHost to) {
+		processEvent(msgTransferStartCheck, "Exposed to virus", from, to, m);
 	}
 
 	public void newMessage(Message m) {

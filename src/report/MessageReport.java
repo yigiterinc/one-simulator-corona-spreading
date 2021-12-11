@@ -49,6 +49,11 @@ public class MessageReport extends Report implements MessageListener {
 	}
 
 	@Override
+	public void virusTransferred(Message m, DTNHost from, DTNHost to) {
+
+	}
+
+	@Override
 	public void done() {
 		super.done();
 	}

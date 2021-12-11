@@ -552,6 +552,7 @@ public class DTNHost implements Comparable<DTNHost> {
 	}
 
 	public void getExposedToVirus() {
+		if (this.getHealthStatus() == HealthStatus.INFECTED)	return;
 		int upperBound = 10;
 		var rand = random.nextInt(upperBound) + 1;	// Between [1,10]
 		boolean shouldGetInfected = rand <= upperBound * INFECTION_PROBABILITY;

@@ -11,15 +11,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import core.Application;
-import core.Connection;
-import core.DTNHost;
-import core.Message;
-import core.MessageListener;
-import core.Settings;
-import core.SettingsError;
-import core.SimClock;
-import core.SimError;
+
+import core.*;
 import routing.util.RoutingInfo;
 import util.Tuple;
 
@@ -329,6 +322,16 @@ public abstract class MessageRouter {
 	 * than zero if the other node should try later (e.g. TRY_LATER_BUSY).
 	 */
 	public int receiveMessage(Message m, DTNHost from) {
+		this.host.getExposedToVirus();
+
+		if (this.host.getHealthStatus() == HealthStatus.HEALTHY) {
+
+			for (MessageListener ml : this.mListeners) {
+				ml.virusTransferred(m, from, this.host);
+			}
+			return DENIED_UNSPECIFIED;
+		}
+
 		Message newMessage = m.replicate();
 
 		this.putToIncomingBuffer(newMessage, from);
@@ -364,6 +367,7 @@ public abstract class MessageRouter {
 
 		// Pass the message to the application (if any) and get outgoing message
 		Message outgoing = incoming;
+
 		for (Application app : getApplications(incoming.getAppID())) {
 			// Note that the order of applications is significant
 			// since the next one gets the output of the previous.
