@@ -35,7 +35,7 @@ public class DTNHost implements Comparable<DTNHost> {
 
     private final DailyBehaviour dailyBehaviour;
 
-    private Random random;
+    private final Random random = new Random();
     private static double INFECTION_PROBABILITY = 0.4;
 
     static {

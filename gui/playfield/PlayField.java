@@ -16,6 +16,7 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -50,7 +51,9 @@ public class PlayField extends JPanel {
 	private AffineTransform curTransform;
 	private double underlayImgDx;
 	private double underlayImgDy;
-	
+
+	private HashMap<String, NodeGraphic> nodeGraphics = new HashMap<>();
+
 	/**
 	 * Creates a playfield
 	 * @param w The world that contains the actors to be drawn
@@ -192,12 +195,14 @@ public class PlayField extends JPanel {
 		
 		// draw hosts
 		for (DTNHost h : w.getHosts()) {
-			new NodeGraphic(h).draw(g2); 
+			NodeGraphic nodeGraphic = new NodeGraphic(h);
+			nodeGraphics.put(h.getName(), nodeGraphic);
+			nodeGraphic.draw(g2);
 		}
 		
 		// draw overlay graphics
-		for (int i=0, n=overlayGraphics.size(); i<n; i++) {
-			overlayGraphics.get(i).draw(g2);
+		for (PlayFieldGraphic overlayGraphic : overlayGraphics) {
+			overlayGraphic.draw(g2);
 		}
 		
 		// draw reference scale
@@ -305,6 +310,10 @@ public class PlayField extends JPanel {
 			}
 		}
 		
-		gui.setFocus(closest);		
+		gui.setFocus(closest);
+	}
+
+	public HashMap<String, NodeGraphic> getNodeGraphics() {
+		return nodeGraphics;
 	}
 }

@@ -4,6 +4,7 @@
  */
 package gui;
 
+import core.HealthStatus;
 import gui.playfield.PlayField;
 
 import java.awt.event.MouseAdapter;
@@ -111,6 +112,21 @@ public class DTNSimGUI extends DTNSimUI {
 			else {
 				try {
 					world.update();
+					boolean updated = false;
+					synchronized (this) {
+						for (String nodeName : field.getNodeGraphics().keySet()) {
+							for (var host : this.world.getHosts()) {
+								if (updated) break;
+								if (host.getName().equals(nodeName)) {
+									if (host.isInfected()) {
+										field.updateField();
+										updated = true;
+									}
+								}
+							}
+						}
+					}
+
 				} catch (AssertionError e) {
 					// handles both assertion errors and SimErrors
 					processAssertionError(e);
