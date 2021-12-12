@@ -1,7 +1,7 @@
 ## Settings that define ProhibitedPolygonRwp movement with one group of nodes.
 
 Scenario.name = VirusSpreading
-Scenario.endTime = 36000
+Scenario.endTime = 30000
 Scenario.updateInterval = 0.1
 Scenario.simulateConnections = true
 Scenario.nrofHostGroups = 4
@@ -22,20 +22,30 @@ Group1.nrofHosts = 1
 Group1.movementModel = StationaryMovement
 Group1.nodeLocation = 0,0
 Group1.nrofInterfaces = 0
+Group1.personType = TYPE_STUDENT
 
 Group2.groupID = infected
 Group2.nrofHosts = 3
 Group2.movementModel = ProhibitedPolygonRwp
+Group2.routeFile = data/cluster/ferryroute.wkt
+Group2.personType = TYPE_STUDENT
 
 Group3.groupID = healthy
 Group3.nrofHosts = 10
 Group3.movementModel = ProhibitedPolygonRwp
+Group3.routeFile = data/cluster/ferryroute.wkt
+Group3.personType = TYPE_STUDENT
 
-Group4.groupID = mapDrawer
-Group4.nrofHosts = 0
-Group4.movementModel = MapRouteMovement
-Group4.routeFile = data/cluster/ferryroute.wkt
-Group4.routeType = 1
+Group4.groupID = professor
+Group4.nrofHosts = 3
+Group4.movementModel = ProhibitedPolygonRwp
+Group4.personType = Type.STAFF
+
+#Group4.groupID = mapDrawer
+#Group4.nrofHosts = 0
+#Group4.movementModel = MapRouteMovement
+#Group4.routeFile = data/cluster/ferryroute.wkt
+#Group4.routeType = 1
 
 ## Message creation parameters
 # How many event generators

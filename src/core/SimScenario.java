@@ -15,6 +15,9 @@ import movement.MapBasedMovement;
 import movement.MovementModel;
 import movement.map.SimMap;
 import routing.MessageRouter;
+import temporalbehavior.DailyPlan;
+import temporalbehavior.Lecture;
+import temporalbehavior.RoomPlans;
 
 /**
  * A simulation scenario used for getting and storing the settings of a
@@ -70,6 +73,8 @@ public class SimScenario implements Serializable {
 	public static final String INTERFACENAME_S = "interface";
 	/** application name in the group -setting id ({@value})*/
 	public static final String GAPPNAME_S = "application";
+
+	protected RoomPlans roomPlans = new RoomPlans();
 
 	/** package where to look for movement models */
 	private static final String MM_PACKAGE = "movement.";
@@ -159,11 +164,24 @@ public class SimScenario implements Serializable {
 		this.worldSizeX = worldSize[0];
 		this.worldSizeY = worldSize[1];
 
+		createRoomPlans();
 		createHosts();
 
 		this.world = new World(hosts, worldSizeX, worldSizeY, updateInterval,
 				updateListeners, simulateConnections,
 				eqHandler.getEventQueues());
+	}
+
+	private void createRoomPlans() {
+		//Room1
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK1, DailyPlan.LECTURE_LENGHT, new Coord(475.0,140.0)));
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK2, DailyPlan.LECTURE_LENGHT, new Coord(475.0,140.0)));
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK3, DailyPlan.LECTURE_LENGHT, new Coord(475.0,140.0)));
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK4, DailyPlan.LECTURE_LENGHT, new Coord(475.0,140.0)));
+		//Room2
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK1, DailyPlan.LECTURE_LENGHT, new Coord(440.0,200.0)));
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK4, DailyPlan.LECTURE_LENGHT, new Coord(440.0,200.0)));
+		roomPlans.addLecture(new Lecture(DailyPlan.START_BLOCK5, DailyPlan.LECTURE_LENGHT, new Coord(440.0,200.0)));
 	}
 
 	/**
@@ -327,6 +345,7 @@ public class SimScenario implements Serializable {
 			Settings s = new Settings(GROUP_NS+i);
 			s.setSecondaryNamespace(GROUP_NS);
 			String gid = s.getSetting(GROUP_ID_S);
+			String personType = s.getSetting("personType");
 			int nrofHosts = s.getInt(NROF_HOSTS_S);
 			int nrofInterfaces = s.getInt(NROF_INTERF_S);
 			int appCount;
@@ -393,11 +412,12 @@ public class SimScenario implements Serializable {
 			for (int j=0; j<nrofHosts; j++) {
 				ModuleCommunicationBus comBus = new ModuleCommunicationBus();
 
+				DailyPlan dailyPlan = new DailyPlan(roomPlans);
 				// prototypes are given to new DTNHost which replicates
 				// new instances of movement model and message router
 				DTNHost host = new DTNHost(this.messageListeners,
-						this.movementListeners,	gid, interfaces, comBus,
-						mmProto, mRouterProto);
+										this.movementListeners,	gid, interfaces, comBus,
+										mmProto, mRouterProto, dailyPlan, personType);
 				hosts.add(host);
 			}
 		}

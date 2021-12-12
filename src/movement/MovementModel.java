@@ -58,6 +58,10 @@ public abstract class MovementModel {
 	protected double minWaitTime;
 	protected double maxWaitTime;
 
+	protected boolean isActive = true;
+	protected boolean inactiveTimer = false;
+	protected double reactivateTime = 0.0;
+
 	private int maxX;
 	private int maxY;
 
@@ -229,8 +233,26 @@ public abstract class MovementModel {
 	 */
 	public boolean isActive() {
 		/* TODO: add offset support */
-		return ah.isActive();
+		if(isActive)
+			return true;
+		//else
+		if(this.inactiveTimer && this.reactivateTime > SimClock.getTime())
+			return false;
+		inactiveTimer = false;
+		return true;
+		//return ah.isActive();
 	}
+	public void setActive(boolean active){
+		this.isActive = active;
+	}
+
+	public void setInactive(double inactiveInterval) {
+		this.isActive = false;
+		this.inactiveTimer = true;
+		this.reactivateTime = SimClock.getTime()+inactiveInterval;
+	}
+
+	public Coord randomCoord(){return new Coord(0,0);}
 
 	/**
 	 * Returns a sim time when the next path is available. This implementation
