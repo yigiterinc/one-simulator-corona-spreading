@@ -11,7 +11,6 @@ import java.util.ArrayList;
  */
 public class CafeteriaState extends State {
     private double stateEnterTime = 0;
-    private boolean toldDestination = false;
     private Coord CAFETERIA = new Coord(70,50);
 
     public CafeteriaState(DailyBehaviour dailyBehaviour, State state){

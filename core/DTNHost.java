@@ -18,6 +18,7 @@ import routing.util.RoutingInfo;
 public class DTNHost implements Comparable<DTNHost> {
     private static int nextAddress = 0;
     private int address;
+    private double lastExposedTime;
 
     private MessageRouter router;
     private Path path;
@@ -36,7 +37,7 @@ public class DTNHost implements Comparable<DTNHost> {
     private final DailyBehaviour dailyBehaviour;
 
     private final Random random = new Random();
-    private static double INFECTION_PROBABILITY = 0.4;
+    private double INFECTION_PROBABILITY = 0.4;
 
     static {
         DTNSim.registerForReset(DTNHost.class.getCanonicalName());
@@ -546,9 +547,15 @@ public class DTNHost implements Comparable<DTNHost> {
 
     public void getExposedToVirus() {
         if (healthStatus == HealthStatus.INFECTED) return;
-        int upperBound = 10;
-        var rand = random.nextInt(upperBound) + 1; // Between [1,10]
-        boolean shouldGetInfected = rand <= upperBound * INFECTION_PROBABILITY;
+
+        double timePassedUntilLastExposition = SimClock.getTime() - lastExposedTime;
+        int THRESHOLD = 250;
+        if (timePassedUntilLastExposition < THRESHOLD) {
+            return;
+        }
+
+        var rand = random.nextDouble(); // Between [0,1]  0.5
+        boolean shouldGetInfected = rand <= INFECTION_PROBABILITY;
         if (shouldGetInfected) {
             this.healthStatus = HealthStatus.INFECTED;
         }
@@ -560,5 +567,14 @@ public class DTNHost implements Comparable<DTNHost> {
 
     public HealthStatus getHealthStatus() {
         return healthStatus;
+    }
+
+
+    public double getLastExposedTime() {
+        return lastExposedTime;
+    }
+
+    public void setLastExposedTime(double lastExposedTime) {
+        this.lastExposedTime = lastExposedTime;
     }
 }

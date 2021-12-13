@@ -101,7 +101,7 @@ public abstract class DTNSimUI {
 
 			double warmupTime = 0;
 			if (settings.contains(MM_WARMUP_S)) {
-				warmupTime = settings.getDouble(MM_WARMUP_S);
+				warmupTime = 0;
 				if (warmupTime > 0) {
 					SimClock c = SimClock.getInstance();
 					c.setTime(-warmupTime);

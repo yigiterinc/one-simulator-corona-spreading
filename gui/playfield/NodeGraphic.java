@@ -20,10 +20,10 @@ import core.NetworkInterface;
  *
  */
 public class NodeGraphic extends PlayFieldGraphic {
-	private static boolean drawCoverage;
+	private static boolean drawCoverage = false;
 	private static boolean drawNodeName;
 	private static boolean drawConnections;
-	private static boolean drawBuffer;
+	private static boolean drawBuffer = false;
 	private static List<DTNHost> highlightedNodes;
 	
 	private static Color rangeColor = Color.GREEN;
@@ -106,11 +106,9 @@ public class NodeGraphic extends PlayFieldGraphic {
 			}
 		}
 
-
 		/* draw node rectangle */
 		g2.setColor(node.isInfected() ? infectedHostColor : hostColor);
-		g2.drawRect(scale(loc.getX()-1),scale(loc.getY()-1),
-		scale(2),scale(2));
+		g2.drawRect(scale(loc.getX()-1),scale(loc.getY()-1), scale(2),scale(2));
 
 		if (isHighlighted()) {
 			g2.setColor(highlightedNodeColor);
@@ -169,8 +167,8 @@ public class NodeGraphic extends PlayFieldGraphic {
 		int nrofMessages = node.getNrofMessages();
 		Coord loc = node.getLocation();
 
-		drawBar(g2,loc, nrofMessages % 10, 1);
-		drawBar(g2,loc, nrofMessages / 10, 2);
+		//drawBar(g2,loc, nrofMessages % 10, 1);
+		//drawBar(g2,loc, nrofMessages / 10, 2);
 	}
 
 	/**

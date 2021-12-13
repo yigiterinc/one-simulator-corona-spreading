@@ -3,7 +3,6 @@ package TemporalBehaviour;
 import core.*;
 import movement.MovementModel;
 import movement.MovementVector;
-import movement.MyProhibitedPolygonRwp;
 import movement.Path;
 
 import java.util.*;
@@ -12,7 +11,6 @@ import java.util.*;
  * Created by Matthias on 18.11.2015.
  */
 public class DailyBehaviour {
-    //public static int counter = 0;              //hardcoded bullshit <nick>
 
     private RoomPlans roomPlans;
     private ArrayList<Lecture> selectedLectures = new ArrayList<>();
@@ -70,40 +68,20 @@ public class DailyBehaviour {
         //arrivalTime = 0;
         arrivalTime = (random.nextInt(20) * 100) + 100;
         departureTime = (random.nextInt(30) * 100) + 23000;
-        //departureTime = 999999999;
-
-
-        //counter++;  //hardoced bullshit <nick>
 
         this.roomPlans = RoomPlans.getRoomPlans();
         this.host = host;
         setInitialLocation();
-
-
-//        this.movListeners = movLs;
-//        if (movLs != null) { // inform movement listeners about the location
-//            for (MovementListener l : movLs) {
-//                l.initialLocation(host, this.location);
-//            }
-//        }
     }
     private void setEntryLocation(){
         Random rng = new Random();
-        //TODO: Random selection
-        switch (2){//rng.nextInt(3)) {
-            case 0:
-                this.location.setLocation(450.0, 90.0);
-                break;
-            case 1:
-                this.location.setLocation(490.0,220.0);
-                break;
-            case 2:
-                //if(state instanceof IdleState)
-                    //this.location.setLocation(1300.0,0.0);
-                this.location.setLocation(UBahnDepartureState.UBAHN_COORDS.getX(),UBahnDepartureState.UBAHN_COORDS.getY());
-                //else
-                //    this.location.setLocation(60.0,200.0);
-                break;
+        int random = rng.nextInt(10);
+        if (host.isInfected()) {
+            this.location.setLocation(450.0, 90.0);
+        } else if (random < 5) {
+            this.location.setLocation(UBahnDepartureState.UBAHN_COORDS.getX(),UBahnDepartureState.UBAHN_COORDS.getY());
+        } else {
+            this.location.setLocation(490.0,220.0);
         }
     }
 
@@ -175,7 +153,7 @@ public class DailyBehaviour {
             return;
         }
         if (this.destination == null || state.destinationChanged()) {
-            if (!clculateNextWaypoint()) {
+            if (nextWaypointNotCalculated()) {
                 return;
             }
         }
@@ -190,7 +168,7 @@ public class DailyBehaviour {
             //this.getState().reachedDestination();
             possibleMovement -= distance;
             distanceExceedsNextDestinationn = true;
-            if (!clculateNextWaypoint()) { // get a new waypoint
+            if (nextWaypointNotCalculated()) { // get a new waypoint
                 return; // no more waypoints left
             }
             distance = this.location.distance(this.destination);
@@ -212,9 +190,8 @@ public class DailyBehaviour {
      */
     private Path path;
     private boolean distanceExceedsNextDestinationn = false;
-    private boolean clculateNextWaypoint() {
+    private boolean nextWaypointNotCalculated() {
 
-        //MovementVector vec = movementModel.getPath(destination,speed);
         if(state.getDestination().equals(this.location) || (distanceExceedsNextDestinationn && (path == null || path.getCoords().size() == 0))){
             state.reachedDestination();
             distanceExceedsNextDestinationn = false;
@@ -223,42 +200,15 @@ public class DailyBehaviour {
         if (path == null||!path.hasNext()) {
             Coord destination = state.getDestination();
             double speed = state.getSpeed();
-            //state.reachedDestination();
-            if(destination != null)
+            if (destination != null)
                 path = movementModel.getPath(this.location, destination, speed);
             else
-                return false;
+                return true;
         }
-
-        //Check path is within building
-        /*if(movementModel.pathIntersects(this.location,vec.coord) || tempDestination != null){
-            if(!intersectionAvoidingWay1)
-            //move to the center of the main hall
-                vec = calculateNonIntersectingWay1(vec);
-            else if(!intersectionAvoidingWay2)
-                vec = calculateNonIntersectingWay2(tempDestination);
-            else {
-                intersectionAvoidingWay2 = false;
-                vec = tempDestination;
-                tempDestination = null;
-            }
-
-        }*/
-        //System.out.println("intersect: "+movementModel.pathIntersects(new Coord(60,100),new Coord(60,200)));
-        //System.out.println("intersect: "+movementModel.pathIntersects(new Coord(60,100),new Coord(450.0, 90.0)));
 
         this.destination = path.getNextWaypoint();
         this.speed = path.getSpeed();
-        //System.out.println("- nextWaypoint: "+this.destination);
-        //if(this.destination == this.location)
-          //  return false;
-
-//        if (this.movListeners != null) {
-//            for (MovementListener l : this.movListeners) {
-//                l.newDestination(this, this.destination, this.speed);
-//            }
-//        }
-        return true;
+        return false;
     }
 
     public ArrayList<Lecture> getLecturesAtTime(double time){
@@ -272,8 +222,6 @@ public class DailyBehaviour {
     }
 
     private MovementVector tempDestination = null;
-    private boolean intersectionAvoidingWay1 = false;
-    private boolean intersectionAvoidingWay2 = false;
 
     public MovementVector getTempDestination() {
         return this.tempDestination;
@@ -286,15 +234,12 @@ public class DailyBehaviour {
     private MovementVector calculateNonIntersectingWay1(MovementVector vec){
         //save destination
         tempDestination = vec;
-        intersectionAvoidingWay1 = true;
         //go to middle of main hall -> y = 310
         MovementVector middleCoord = new MovementVector((new Coord(location.getX(),310)),tempDestination.speed);
         return middleCoord;
     }
 
     private MovementVector calculateNonIntersectingWay2(MovementVector vec){
-        intersectionAvoidingWay1 = false;
-        intersectionAvoidingWay2 = true;
         if(vec != null){
             MovementVector middleCoord = new MovementVector((new Coord(vec.coord.getX(),310)),tempDestination.speed);
             return middleCoord;}

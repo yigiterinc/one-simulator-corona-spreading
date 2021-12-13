@@ -55,7 +55,7 @@ public class GUIControls extends JPanel implements ActionListener, ChangeListene
 	private static final String TEXT_SEPS = "simulated seconds per second";
 
 	// "simulated events per second" averaging time (milliseconds)
-	private static final int EPS_AVG_TIME = 2000;
+	private static final int EPS_AVG_TIME = 1000;
 	private static final String SCREENSHOT_FILE_TYPE = "png";
 	private static final String SCREENSHOT_FILE = "screenshot";
 	
