@@ -559,6 +559,8 @@ public class DTNHost implements Comparable<DTNHost> {
         if (shouldGetInfected) {
             this.healthStatus = HealthStatus.INFECTED;
         }
+
+        lastExposedTime = SimClock.getTime();
     }
 
     public void setInfectionProbability(double infectionProbability) {
@@ -567,14 +569,5 @@ public class DTNHost implements Comparable<DTNHost> {
 
     public HealthStatus getHealthStatus() {
         return healthStatus;
-    }
-
-
-    public double getLastExposedTime() {
-        return lastExposedTime;
-    }
-
-    public void setLastExposedTime(double lastExposedTime) {
-        this.lastExposedTime = lastExposedTime;
     }
 }
