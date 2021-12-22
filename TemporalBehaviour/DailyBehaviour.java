@@ -7,9 +7,6 @@ import movement.Path;
 
 import java.util.*;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public class DailyBehaviour {
 
     private RoomPlans roomPlans;
@@ -17,14 +14,14 @@ public class DailyBehaviour {
     private DTNHost host;
     private MovementModel movementModel;
 
-    public static double START_BLOCK1 = 2000;//2000;
-    public static double HOUR = 2000;//3200;
+    public static double START_BLOCK1 = 2000;
+    public static double HOUR = 2000;
     public static double START_BLOCK2 = 2*HOUR+START_BLOCK1;
     public static double START_BLOCK3 = 2*HOUR+START_BLOCK2;
     public static double START_BLOCK4 = 2*HOUR+START_BLOCK3;
     public static double START_BLOCK5 = 2*HOUR+START_BLOCK4;
     public static double START_BLOCK6 = 2*HOUR+START_BLOCK5;
-    public static double LECTURE_LENGHT = 1.0*HOUR;//1.5*HOUR;
+    public static double LECTURE_LENGTH = 1.0*HOUR;
 
     private Coord location = new Coord(0,0);
     private Coord destination;
@@ -32,9 +29,6 @@ public class DailyBehaviour {
 
     private int arrivalTime = 0;
     private int departureTime = 0;
-
-    //private List<MovementListener> movListeners;
-
 
     public MovementModel getMovement(){
         return movementModel;
@@ -53,19 +47,11 @@ public class DailyBehaviour {
     }
 
     public DailyBehaviour(DTNHost host, MovementModel movement, List<MovementListener> movLs){
-        //Settings s = new Settings(SimScenario.SCENARIO_NS);
-        //this.movementModel = new MyProhibitedPolygonRwp(s);
         this.movementModel = movement.replicate();
-
-        //if(counter < 50) {
-        //    this.state = new FreetimeState(this, new InitState(this, null));
-        //}
-        //else {
-            this.state = new IdleState(this, new InitState(this, null));
-        //}
+        this.state = new IdleState(this, new InitState(this, null));
 
         Random random = new Random();
-        //arrivalTime = 0;
+
         arrivalTime = (random.nextInt(20) * 100) + 100;
         departureTime = (random.nextInt(30) * 100) + 23000;
 
@@ -85,7 +71,6 @@ public class DailyBehaviour {
         }
     }
 
-
     public void changeState(State state){
         this.state = state;
     }
@@ -96,41 +81,38 @@ public class DailyBehaviour {
     public void chooseLectures() {
         Random random = new Random();
 
-        //block1
+        // block1
         ArrayList<Lecture> lectureList = roomPlans.getAllLecturesAtTime(START_BLOCK1);
         if(lectureList.size() > 0)
             selectedLectures.add(lectureList.get(random.nextInt(lectureList.size())));
-        //block2
+        // block2
         lectureList = roomPlans.getAllLecturesAtTime(START_BLOCK2);
         if(lectureList.size() > 0 && random.nextDouble()<0.8)
             selectedLectures.add(lectureList.get(random.nextInt(lectureList.size())));
-        //block3
+        // block3
         lectureList = roomPlans.getAllLecturesAtTime(START_BLOCK3);
         if(lectureList.size() > 0 && random.nextDouble()<0.5)
             selectedLectures.add(lectureList.get(random.nextInt(lectureList.size())));
-        //block4
+        // block4
         lectureList = roomPlans.getAllLecturesAtTime(START_BLOCK4);
         if(lectureList.size() > 0 && random.nextDouble()<0.8)
             selectedLectures.add(lectureList.get(random.nextInt(lectureList.size())));
-        //block5
+        // block5
         lectureList = roomPlans.getAllLecturesAtTime(START_BLOCK5);
         if(lectureList.size() > 0 && random.nextDouble()<0.2)
             selectedLectures.add(lectureList.get(random.nextInt(lectureList.size())));
     }
 
-
-    //nick
     public void update(){
-        //In normal conditions, all nodes will start from idle state
+        // Start from idle state
         if(state instanceof IdleState && arrivalTime <= SimClock.getTime() && departureTime > SimClock.getTime())  {
             state.reachedDestination();
             this.movementModel.setActive(true);
         }
 
-        //if departureTime -> depart
+        // Depart on the departure time
         if(departureTime <= SimClock.getTime() && !(state instanceof UBahnDepartureState)) {
             this.state = new UBahnDepartureState(this, this.state);
-            //this.destination = this.state.getDestination();
         }
         state.update();
     }

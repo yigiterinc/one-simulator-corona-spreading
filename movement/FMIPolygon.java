@@ -13,7 +13,7 @@ import java.util.List;
  * into. The polygon is defined by a *closed* (same point as first and
  * last) path, represented as a list of {@code Coord}s.
  *
- * @author teemuk, nick promponas
+ * @author teemuk
  */
 public class FMIPolygon extends MapBasedMovement {
 
@@ -59,15 +59,11 @@ public class FMIPolygon extends MapBasedMovement {
             p.addWaypoint(destination, speed);
             return p;
         }
-        if (areaSource == -1) {      //Movement from outside
-            if (areaDestination == -1) { //Move to outside
-                //p.addWaypoint(destination, speed);      //Then: Direct movement
-            }
-            if (1 == areaDestination && areaDestination <= 13) {   //Move to destination via mainhall
-                p.addWaypoint(UBahnArrivalState.ENTRANCE_COORDS);       //Go into building via Entrance
-                //TODO: Select closest entrance
+        if (areaSource == -1) {      // Movement to building
+            if (1 == areaDestination && areaDestination <= 13) {   // Movement to destination through main hall
+                p.addWaypoint(UBahnArrivalState.ENTRANCE_COORDS);       // Movement to building through Entrance
                 if (1 < areaDestination)
-                    p.addWaypoint(getAreaEntrance(areaDestination));    //Go to destination via area entrance
+                    p.addWaypoint(getAreaEntrance(areaDestination));    // Movement to destination through area entrance
             }
         }
         if (areaDestination == -1) {
@@ -75,14 +71,13 @@ public class FMIPolygon extends MapBasedMovement {
             p.addWaypoint(destination, speed);
             return p;
         }
-        if (2 <= areaSource && areaSource <= 13) {      //Move from some Finger, Lecture Hall or Library, not necessary if you are already in the main hall
+        if (2 <= areaSource && areaSource <= 13) {      // Movement from some are
             p.addWaypoint(getAreaEntrance(areaSource), speed);
         }
-        if (1 <= areaDestination && areaDestination <= 13) { //Move to Another place inside the building
+        if (1 <= areaDestination && areaDestination <= 13) {  // Movement to another area
             p.addWaypoint(getAreaEntrance(areaDestination), speed);
         }
-        p.addWaypoint(destination, speed);               //Add final destination
-        //printPath(p, source, destination);
+        p.addWaypoint(destination, speed);
         return p;
     }
 
@@ -99,14 +94,13 @@ public class FMIPolygon extends MapBasedMovement {
     private Coord getAreaEntrance(int areaSource) {
         switch (areaSource) {
             case 1:
-                //Mainhall
-                //there are three entrances
-
+                // Main hall
+                // there are three entrances
             case 2:
-                //Hoersaal1
+                // Hoersaal1
                 return new Coord(116, 41);
             case 3:
-                //Library
+                // Library
                 return new Coord(22, 44 - 2);
             case 4:
                 return new Coord(118, 57);
@@ -145,7 +139,7 @@ public class FMIPolygon extends MapBasedMovement {
         pHoersaal1Area2.addPoint(113, 36);
         pHoersaal1Area2.addPoint(127, 46);
 
-        Polygon pFinger3 = new Polygon();       //Library
+        Polygon pFinger3 = new Polygon();       // Library
         pFinger3.addPoint(16, 39);
         pFinger3.addPoint(3, 43);
         pFinger3.addPoint(3, 64);
@@ -238,24 +232,7 @@ public class FMIPolygon extends MapBasedMovement {
             pBuilding.addPoint((int) c.getX(), (int) c.getY());
         }
 
-
-        /*List <Coord> finger11 = Arrays.asList(
-                new Coord( 22,0),
-                new Coord( 31,0 ),
-                new Coord( 31,31),
-                new Coord( 22,31 ),
-                new Coord( 22,0 )
-        );
-        List <Coord> finger8 = Arrays.asList(
-                new Coord( 77,55 ),
-                new Coord( 86,55 ),
-                new Coord( 83,82 ),
-                new Coord( 75, 81 ),
-                new Coord( 77,55 )
-        );*/
-
-
-        if (!pBuilding.contains(position.getX(), position.getY())) {      //Not in building
+        if (!pBuilding.contains(position.getX(), position.getY())) {      // Not in building
             return -1;
         }
         if (pHoersaal1Area2.contains(position.getX(), position.getY())) {
@@ -294,32 +271,13 @@ public class FMIPolygon extends MapBasedMovement {
         if (pFinger13.contains(position.getX(), position.getY())) {
             return 14;
         }
-        return 0;//Somewhere else in building
+        return 0; // Somewhere else in the building
     }
 
     public MovementVector getPath(Coord destination, double speed) {
-        // Creates a new path from the previous waypoint to a new one.
-
-//        final Path p;
-//        p = new Path( super.generateSpeed() );
-//        p.addWaypoint( this.lastWaypoint.clone() );
-
-
-//        // Add only one point. An arbitrary number of Coords could be added to
-//        // the path here and the simulator will follow the full path before
-//        // asking for the next one.
-//        Coord c;
-//        do {
-//                c = this.randomCoord();
-//        } while ( pathIntersects( this.polygon, this.lastWaypoint, c ) );
-
-        //Coord c = host.getDailyBehaviour().getState().getDestination();
         Coord c = destination;
-        //p.addWaypoint( c );
-
         this.lastWaypoint = c;  //TODO: line required?
         return new MovementVector(c, speed);
-        //return p;
     }
 
     @Override
@@ -338,14 +296,6 @@ public class FMIPolygon extends MapBasedMovement {
         return c;
     }
 
-//  @Override
-//  public boolean isMovementActive() {
-//    final double curTime = core.SimClock.getTime();
-//    //return true;//!(curTime >= 2500 && curTime <= 3500);
-//      return isMovementActive;
-//  }
-
-
     @Override
     public double nextPathAvailable() {
         final double curTime = core.SimClock.getTime();
@@ -361,16 +311,6 @@ public class FMIPolygon extends MapBasedMovement {
         super(settings);
         // Read the invert setting
         this.invert = settings.getBoolean(INVERT_SETTING, INVERT_DEFAULT);
-
-        //this.setLocalMaxima();
-
-        //System.out.println(super.getMaxX() + "   " + super.getMaxY());
-        //System.out.println(localMaxX + "   " + localMaxY);
-        //invert polygon too
-        //simMap.mirror();
-        //setBounds();
-        //Coord offset = simMap.getMinBound().clone();
-        //simMap.translate(-offset.getX(), -offset.getY());
     }
 
     public FMIPolygon(final FMIPolygon other) {
@@ -491,9 +431,6 @@ public class FMIPolygon extends MapBasedMovement {
             }
         }
 
-        //Coord minBound = new Coord(minX, minY);
-        //Coord maxBound = new Coord(maxX, maxY);
-
         if (returnMinimum)
             return new Coord(minX, minY);
         else
@@ -504,10 +441,6 @@ public class FMIPolygon extends MapBasedMovement {
         for (Coord c : pol) {
             c.translate(dx, dy);
         }
-
-        //minBound.translate(dx, dy);
-        //maxBound.translate(dx, dy);
-        //offset.translate(dx, dy);
 
         return pol;
     }
