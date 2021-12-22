@@ -92,7 +92,7 @@ MapBasedMovement.mapFile1 = data/first_effort/first_effort_route.wkt
 MapBasedMovement.mapFile2 = data/first_effort/first_effort_origin.wkt
 
 Report.nrofReports = 10
-Report.reportDir = assignment1-reports
+Report.reportDir = assignment1-reports-medicalmask
 Report.report1 = TotalContactTimeReport
 Report.report2 = ConnectivityONEReport
 Report.report3 = ContactTimesReport
