@@ -308,6 +308,10 @@ public abstract class MessageRouter {
 	 * than zero if the other node should try later (e.g. TRY_LATER_BUSY).
 	 */
 	public int receiveMessage(Message m, DTNHost from) {
+		if (!from.isInfected()) {
+			return DENIED_UNSPECIFIED;
+		}
+
 		this.host.getExposedToVirus();
 
 		if (this.host.getHealthStatus() == HealthStatus.HEALTHY) {
