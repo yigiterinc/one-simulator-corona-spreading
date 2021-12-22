@@ -108,7 +108,7 @@ public class NodeGraphic extends PlayFieldGraphic {
 
 		/* draw node rectangle */
 		g2.setColor(node.isInfected() ? infectedHostColor : hostColor);
-		g2.drawRect(scale(loc.getX()-1),scale(loc.getY()-1), scale(2),scale(2));
+		g2.drawRect(scale(loc.getX()-0.3),scale(loc.getY()-0.3), scale(0.6),scale(0.6));
 
 		if (isHighlighted()) {
 			g2.setColor(highlightedNodeColor);
