@@ -7,24 +7,18 @@ import core.SimClock;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public class FreetimeState extends State {
 
     private double stateEnterTime = 0;
+    private Coord c = dailyBehaviour.getMovement().randomCoord();
 
     public FreetimeState(DailyBehaviour dailyBehaviour, State state){
         super(dailyBehaviour, state);
         stateEnterTime = SimClock.getTime();
-
     }
-    private Coord c;
 
     @Override
     public Coord getDestination() {
-        var host = this.dailyBehaviour.getHost();
-        host.overrideNameWith("FT");
         destinationChanged = false;
         if(c == null)
             reachedDestination();   //generate new random position
@@ -33,25 +27,26 @@ public class FreetimeState extends State {
 
     @Override
     public void reachedDestination() {
-        c = dailyBehaviour.getMovement().randomCoord();
-        if(random.nextDouble() < 0.02){
+        var host = this.dailyBehaviour.getHost();
+        host.overrideNameWith("Free");
+        dailyBehaviour.getMovement().setInactive(1000);
+        double r = random.nextDouble();
+        if(r < 0.3){
+            dailyBehaviour.changeState(new CafeteriaState(dailyBehaviour, this));
+        } else if(r < 0.6) {
             dailyBehaviour.changeState(new StudyState(dailyBehaviour, this));
         }
-        //ArrayList<Lecture> lectures= dailyBehaviour.getLecturesAtTime(SimClock.getTime());
-        //if( lectures.size() > 0){
-        //    dailyBehaviour.changeState(new LectureState(dailyBehaviour, this, lectures.get(0)));
-        //}
     }
 
     @Override
     public void update() {
-        ArrayList<Lecture> lectures= dailyBehaviour.getLecturesAtTime(SimClock.getTime());
+        ArrayList<Lecture> lectures = dailyBehaviour.getLecturesAtTime(SimClock.getTime());
         if( lectures.size() > 0){
             dailyBehaviour.changeState(new LectureState(dailyBehaviour, this, lectures.get(0)));
         }
     }
 
-    public int distributionTime = 150;// 200;
+    public int distributionTime = 150;
 
     @Override
     public void initConnection(DTNHost otherHost) {

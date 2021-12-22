@@ -6,9 +6,6 @@ import core.SimClock;
 
 import java.util.ArrayList;
 
-/**
- * Created by Nikolas on 24.11.2015.
- */
 public class UBahnArrivalState extends State {
 
     public static Coord ENTRANCE_COORDS = new Coord(107, 40);

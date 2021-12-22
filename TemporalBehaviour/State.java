@@ -8,9 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public abstract class State {
 
     protected Coord destination;

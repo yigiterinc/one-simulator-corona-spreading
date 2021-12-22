@@ -77,11 +77,11 @@ public class DailyBehaviour {
         Random rng = new Random();
         int random = rng.nextInt(10);
         if (host.isInfected()) {
-            this.location.setLocation(450.0, 90.0);
+            this.location.setLocation(130, 0);
         } else if (random < 5) {
-            this.location.setLocation(UBahnDepartureState.UBAHN_COORDS.getX(),UBahnDepartureState.UBAHN_COORDS.getY());
+            this.location.setLocation(150, 0);
         } else {
-            this.location.setLocation(490.0,220.0);
+            this.location.setLocation(170,0);
         }
     }
 

@@ -6,9 +6,6 @@ import core.SimClock;
 
 import java.util.ArrayList;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public class CafeteriaState extends State {
     private double stateEnterTime = 0;
     private Coord CAFETERIA = new Coord(70,50);
@@ -20,8 +17,6 @@ public class CafeteriaState extends State {
 
     @Override
     public Coord getDestination() {
-        var host = this.dailyBehaviour.getHost();
-        host.overrideNameWith("CT");
         destinationChanged = false;
         return CAFETERIA;
     }
@@ -29,6 +24,8 @@ public class CafeteriaState extends State {
     @Override
     public void reachedDestination() {
         //Goal reached
+        var host = this.dailyBehaviour.getHost();
+        host.overrideNameWith("Cafe");
         dailyBehaviour.getMovement().setInactive(800);
         State state = new FreetimeState(dailyBehaviour, this);
         dailyBehaviour.changeState(state);

@@ -6,9 +6,6 @@ import core.SimClock;
 
 import java.util.Random;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public class LectureState extends State {
 
     private Lecture lecture;
@@ -20,14 +17,14 @@ public class LectureState extends State {
 
     @Override
     public Coord getDestination() {
-        var host = this.dailyBehaviour.getHost();
-        host.overrideNameWith("Lec");
         destinationChanged = false;
         return lecture.getCoord();
     }
 
     @Override
     public void reachedDestination() {
+        var host = this.dailyBehaviour.getHost();
+        host.overrideNameWith("Lec");
         dailyBehaviour.getMovement().setActive(false);
         dailyBehaviour.getMovement().setInactive(lecture.getEndTime()-SimClock.getTime());
         //Goal reached

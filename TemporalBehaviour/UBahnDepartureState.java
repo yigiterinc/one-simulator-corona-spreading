@@ -4,12 +4,9 @@ import core.Coord;
 import core.DTNHost;
 import core.SimClock;
 
-/**
- * Created by Nikolas on 24.11.2015.
- */
 public class UBahnDepartureState extends State {
 
-    public static Coord UBAHN_COORDS = new Coord(150, 0);//new Coord(190.0, -93);
+    public static Coord UBAHN_COORDS = new Coord(150, 0);
 
     public UBahnDepartureState(DailyBehaviour dailyBehaviour, State state){
         super(dailyBehaviour, state);

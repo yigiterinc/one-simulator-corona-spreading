@@ -7,9 +7,6 @@ import core.SimClock;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by Nikolas on 24.11.2015.
- */
 public class IdleState extends State {
 
     public IdleState(DailyBehaviour dailyBehaviour, State state){
@@ -19,7 +16,7 @@ public class IdleState extends State {
 
     @Override
     public Coord getDestination() {
-        return null;//dailyBehaviour.getMovement().randomCoord();
+        return null;
     }
 
     @Override

@@ -1,12 +1,8 @@
 package TemporalBehaviour;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
-    import core.Coord;
+import core.Coord;
 
 public class Lecture {
-
 
     private double startTime;
     private double endTime;
@@ -14,10 +10,8 @@ public class Lecture {
     private Coord room;
     private int lectureID;
     public static int current_id_count = 0;
-    //private Lecturer
 
     public Lecture(double startTime, double length, Coord room){
-        //TODO: Check intersection with other Lectures
         current_id_count = current_id_count + 1;
         setLectureID(current_id_count);
         getCoord(room);

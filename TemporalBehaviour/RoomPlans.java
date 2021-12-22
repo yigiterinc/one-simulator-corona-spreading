@@ -6,17 +6,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Matthias on 18.11.2015.
- */
 public class RoomPlans {
 
     Map<Coord, RoomPlan> roomPlansMap = new HashMap<>();
 
     private static RoomPlans roomPlans = null;
     public static final Coord HOERSAAL1 = new Coord(118,42);
-    public static final Coord ROOMFINGER11 = new Coord(83,65);
-    public static final Coord ROOMFINGER8 = new Coord(28,15);
+    public static final Coord ROOMFINGER1 = new Coord(83,65);
+    public static final Coord ROOMFINGER2 = new Coord(28,15);
 
     public static RoomPlans getRoomPlans(){
         if(roomPlans == null){
@@ -35,15 +32,15 @@ public class RoomPlans {
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK2, DailyBehaviour.LECTURE_LENGHT, HOERSAAL1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK3, DailyBehaviour.LECTURE_LENGHT, HOERSAAL1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGHT, HOERSAAL1));
-        //ROOMFINGER11
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER11));
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER11));
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK5, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER11));
-        //ROOMFINGER8
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER8));
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK2, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER8));
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK3, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER8));
-        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER8));
+        //ROOMFINGER1
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER1));
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER1));
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK5, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER1));
+        //ROOMFINGER2
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER2));
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK2, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER2));
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK3, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER2));
+        roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGHT, ROOMFINGER2));
     }
 
     public void addLecture(Lecture lecture){

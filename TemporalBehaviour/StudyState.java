@@ -6,9 +6,6 @@ import core.SimClock;
 
 import java.util.ArrayList;
 
-/**
- * Created by Matthias on 27.11.2015.
- */
 public class StudyState extends State {
     private double stateEnterTime;
 
@@ -21,8 +18,6 @@ public class StudyState extends State {
 
     @Override
     public Coord getDestination() {
-        var host = this.dailyBehaviour.getHost();
-        host.overrideNameWith("Study");
         destinationChanged = false;
         if(c == null)
             c = selectPlaceToStudy();   //generate new random position
@@ -32,12 +27,14 @@ public class StudyState extends State {
         if(random.nextDouble()<0.5){
             return new Coord(15,57);    //Library
         }
-        return new Coord(80,27);        //Rechnerhalle
+        return new Coord(80,27);        //Hall
     }
 
     @Override
     public void reachedDestination() {
         //Goal reached
+        var host = this.dailyBehaviour.getHost();
+        host.overrideNameWith("Study");
         dailyBehaviour.getMovement().setInactive(1500);
         State state = new FreetimeState(dailyBehaviour, this);
         dailyBehaviour.changeState(state);
