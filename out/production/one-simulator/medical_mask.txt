@@ -1,6 +1,6 @@
 ## Settings that define ProhibitedPolygonRwp movement with one group of nodes.
 
-Scenario.name = VirusSpreadingNoMasks
+Scenario.name = VirusSpreadingMedicalMask
 Scenario.endTime = 30000
 Scenario.updateInterval = 0.1
 Scenario.simulateConnections = true
