@@ -1,13 +1,12 @@
 ## Settings that define ProhibitedPolygonRwp movement with one group of nodes.
 
 Scenario.name = VirusSpreadingMedicalMask
-Scenario.endTime = 30000
+Scenario.endTime = 28800
 Scenario.updateInterval = 0.1
 Scenario.simulateConnections = true
 Scenario.nrofHostGroups = 4
 
 MovementModel.worldSize = 500,500
-Events.nrof = 0
 
 myInterface.type = SimpleBroadcastInterface
 myInterface.transmitRange = 1.2
@@ -88,8 +87,8 @@ Events3.prefix = 3COV
 
 ## Map based movement -movement model specific settings
 MapBasedMovement.nrofMapFiles = 2
-MapBasedMovement.mapFile1 = data/first_effort/first_effort_route.wkt
-MapBasedMovement.mapFile2 = data/first_effort/first_effort_origin.wkt
+MapBasedMovement.mapFile1 = data/mapInfo/route.wkt
+MapBasedMovement.mapFile2 = data/mapInfo/origin.wkt
 
 Report.nrofReports = 10
 Report.reportDir = assignment1-reports-medicalmask
