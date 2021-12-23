@@ -1,11 +1,8 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
 import core.SimClock;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class IdleState extends State {
 
@@ -21,7 +18,7 @@ public class IdleState extends State {
 
     @Override
     public void reachedDestination() {
-        dailyBehaviour.changeState(new UBahnArrivalState(dailyBehaviour, this));
+        dailyBehaviour.changeState(new ArrivalState(dailyBehaviour, this));
     }
 
     @Override
@@ -30,9 +27,9 @@ public class IdleState extends State {
     }
 
     @Override
-    public void initConnection(DTNHost otherHost) { /* DO NOTHING */}
+    public void initConnection(DTNHost otherHost) {}
 
     @Override
-    public void removeConnection(DTNHost otherHost) { /* DO NOTHING */}
+    public void removeConnection(DTNHost otherHost) {}
 
 }

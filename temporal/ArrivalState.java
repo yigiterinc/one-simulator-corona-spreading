@@ -1,16 +1,14 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
 import core.SimClock;
 
-import java.util.ArrayList;
-
-public class UBahnArrivalState extends State {
+public class ArrivalState extends State {
 
     public static Coord ENTRANCE_COORDS = new Coord(107, 40);
 
-    public UBahnArrivalState(DailyBehaviour dailyBehaviour, State state){
+    public ArrivalState(DailyBehaviour dailyBehaviour, State state){
         super(dailyBehaviour, state);
     }
 

@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
@@ -23,7 +23,6 @@ public class CafeteriaState extends State {
 
     @Override
     public void reachedDestination() {
-        //Goal reached
         var host = this.dailyBehaviour.getHost();
         host.overrideNameWith("Cafe");
         dailyBehaviour.getMovement().setInactive(800);

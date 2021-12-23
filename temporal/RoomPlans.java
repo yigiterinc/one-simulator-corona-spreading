@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 
@@ -27,16 +27,16 @@ public class RoomPlans {
 
     }
     public static void initRooms(){
-        //HOERSAAL1
+        // HOERSAAL
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGTH, HOERSAAL1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK2, DailyBehaviour.LECTURE_LENGTH, HOERSAAL1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK3, DailyBehaviour.LECTURE_LENGTH, HOERSAAL1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGTH, HOERSAAL1));
-        //ROOMFINGER1
+        // ROOMFINGER1
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK4, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER1));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK5, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER1));
-        //ROOMFINGER2
+        // ROOMFINGER2
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK1, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER2));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK2, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER2));
         roomPlans.addLecture(new Lecture(DailyBehaviour.START_BLOCK3, DailyBehaviour.LECTURE_LENGTH, ROOMFINGER2));

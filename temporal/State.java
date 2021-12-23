@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
@@ -49,7 +49,6 @@ public abstract class State {
     }
 
     public  boolean destinationChanged(){
-        //Only when changed since else a recalculation will be done regarding the movement path
         return destinationChanged;
     }
 }

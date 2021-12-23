@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.*;
 import movement.MovementModel;
@@ -111,8 +111,8 @@ public class DailyBehaviour {
         }
 
         // Depart on the departure time
-        if(departureTime <= SimClock.getTime() && !(state instanceof UBahnDepartureState)) {
-            this.state = new UBahnDepartureState(this, this.state);
+        if(departureTime <= SimClock.getTime() && !(state instanceof DepartureState)) {
+            this.state = new DepartureState(this, this.state);
         }
         state.update();
     }
@@ -214,9 +214,8 @@ public class DailyBehaviour {
     }
 
     private MovementVector calculateNonIntersectingWay1(MovementVector vec){
-        //save destination
         tempDestination = vec;
-        //go to middle of main hall -> y = 310
+        //go to middle of the hall
         MovementVector middleCoord = new MovementVector((new Coord(location.getX(),310)),tempDestination.speed);
         return middleCoord;
     }
@@ -228,13 +227,6 @@ public class DailyBehaviour {
         return null;
     }
 
-//    private Coord calculateNonIntersectingWay3(MovementVector vec){
-//        intersectionAvoidingWay = true;
-//        //go to middle of main hall -> y = 310
-//        Coord middleCoord = new Coord(vec.coord.getX(),vec.coord.getX());
-//        return middleCoord;
-//    }
-
     public void setInitialLocation() {
         setEntryLocation();
         movementModel.setLastWayPoint(this.location);
@@ -245,7 +237,6 @@ public class DailyBehaviour {
     }
 
     public boolean isMovementActive() {
-        //System.out.println("name: "+host.getName()+" isMovementActive: "+movementModel.isActive());
         return movementModel.isActive();
     }
 

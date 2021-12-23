@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
@@ -20,19 +20,18 @@ public class StudyState extends State {
     public Coord getDestination() {
         destinationChanged = false;
         if(c == null)
-            c = selectPlaceToStudy();   //generate new random position
+            c = selectPlaceToStudy();   // generate new random position
         return c;
     }
     private Coord selectPlaceToStudy(){
         if(random.nextDouble()<0.5){
-            return new Coord(15,57);    //Library
+            return new Coord(15,57);    // Library
         }
-        return new Coord(80,27);        //Hall
+        return new Coord(80,27);        // Hall
     }
 
     @Override
     public void reachedDestination() {
-        //Goal reached
         var host = this.dailyBehaviour.getHost();
         host.overrideNameWith("Study");
         dailyBehaviour.getMovement().setInactive(1500);

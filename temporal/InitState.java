@@ -1,11 +1,8 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
 import core.SimClock;
-
-import java.util.ArrayList;
-import java.util.Random;
 
 public class InitState extends State {
 

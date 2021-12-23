@@ -1,6 +1,6 @@
 package movement;
 
-import TemporalBehaviour.UBahnArrivalState;
+import temporal.ArrivalState;
 import core.Coord;
 import core.Settings;
 
@@ -37,9 +37,6 @@ public class FMIPolygon extends MapBasedMovement {
      * Inverted, i.e., only allow nodes to move inside the polygon.
      */
     private final boolean invert;
-
-    //private Coord minBound;
-    //private Coord maxBound;
     private int localMaxX;
     private int localMaxY;
     private boolean goToLecture = false;
@@ -55,13 +52,13 @@ public class FMIPolygon extends MapBasedMovement {
         Path p = new Path();
         int areaSource = getArea(source);
         int areaDestination = getArea(destination);
-        if (areaSource == areaDestination) {       //move in same finger directly
+        if (areaSource == areaDestination) {       // move in the same finger
             p.addWaypoint(destination, speed);
             return p;
         }
         if (areaSource == -1) {      // Movement to building
             if (1 == areaDestination && areaDestination <= 13) {   // Movement to destination through main hall
-                p.addWaypoint(UBahnArrivalState.ENTRANCE_COORDS);       // Movement to building through Entrance
+                p.addWaypoint(ArrivalState.ENTRANCE_COORDS);       // Movement to building through entrance
                 if (1 < areaDestination)
                     p.addWaypoint(getAreaEntrance(areaDestination));    // Movement to destination through area entrance
             }
@@ -71,7 +68,7 @@ public class FMIPolygon extends MapBasedMovement {
             p.addWaypoint(destination, speed);
             return p;
         }
-        if (2 <= areaSource && areaSource <= 13) {      // Movement from some are
+        if (2 <= areaSource && areaSource <= 13) {      // Movement from some area
             p.addWaypoint(getAreaEntrance(areaSource), speed);
         }
         if (1 <= areaDestination && areaDestination <= 13) {  // Movement to another area
@@ -95,7 +92,6 @@ public class FMIPolygon extends MapBasedMovement {
         switch (areaSource) {
             case 1:
                 // Main hall
-                // there are three entrances
             case 2:
                 // Hoersaal1
                 return new Coord(116, 41);
@@ -139,7 +135,7 @@ public class FMIPolygon extends MapBasedMovement {
         pHoersaal1Area2.addPoint(113, 36);
         pHoersaal1Area2.addPoint(127, 46);
 
-        Polygon pFinger3 = new Polygon();       // Library
+        Polygon pFinger3 = new Polygon();
         pFinger3.addPoint(16, 39);
         pFinger3.addPoint(3, 43);
         pFinger3.addPoint(3, 64);
@@ -232,7 +228,7 @@ public class FMIPolygon extends MapBasedMovement {
             pBuilding.addPoint((int) c.getX(), (int) c.getY());
         }
 
-        if (!pBuilding.contains(position.getX(), position.getY())) {      // Not in building
+        if (!pBuilding.contains(position.getX(), position.getY())) {      // not in building
             return -1;
         }
         if (pHoersaal1Area2.contains(position.getX(), position.getY())) {
@@ -276,7 +272,7 @@ public class FMIPolygon extends MapBasedMovement {
 
     public MovementVector getPath(Coord destination, double speed) {
         Coord c = destination;
-        this.lastWaypoint = c;  //TODO: line required?
+        this.lastWaypoint = c;
         return new MovementVector(c, speed);
     }
 

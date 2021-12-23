@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 

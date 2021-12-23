@@ -6,7 +6,7 @@ package core;
 
 import java.util.*;
 
-import TemporalBehaviour.DailyBehaviour;
+import temporal.DailyBehaviour;
 import movement.MovementModel;
 import movement.Path;
 import routing.MessageRouter;

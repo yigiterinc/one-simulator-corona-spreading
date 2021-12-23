@@ -1,13 +1,11 @@
-package TemporalBehaviour;
+package temporal;
 
 import java.util.ArrayList;
 
 public class RoomPlan {
     private ArrayList<Lecture> lectures = new ArrayList<>();
 
-    public RoomPlan(){
-
-    }
+    public RoomPlan(){}
 
 
     public void addLecture(Lecture lecture){

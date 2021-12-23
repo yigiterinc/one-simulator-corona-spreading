@@ -1,4 +1,4 @@
-package TemporalBehaviour;
+package temporal;
 
 import core.Coord;
 import core.DTNHost;
@@ -27,8 +27,6 @@ public class LectureState extends State {
         host.overrideNameWith("Lec");
         dailyBehaviour.getMovement().setActive(false);
         dailyBehaviour.getMovement().setInactive(lecture.getEndTime()-SimClock.getTime());
-        //Goal reached
-        //dailyBehaviour.getMovement().setInactive(lecture.getEndTime()-SimClock.getTime());
         Random random = new Random();
         double rand = random.nextDouble();
         State state;
@@ -40,7 +38,6 @@ public class LectureState extends State {
     }
 
     public  boolean destinationChanged() {
-        //Only when changed since else a recalculation will be done regarding the movement path
         return destinationChanged;
     }
 
