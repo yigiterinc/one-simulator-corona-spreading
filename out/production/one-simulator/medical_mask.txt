@@ -29,13 +29,13 @@ Group2.groupID = student_i
 Group2.nrofHosts = 1
 Group2.role = STUDENT
 Group2.movementModel = FMIPolygon
-Group2.routeFile = data/first_effort/first_effort_route.wkt
+Group2.routeFile = data/mapInfo/route.wkt
 Group2.healthStatus = INFECTED
 
 Group3.groupID = student
 Group3.nrofHosts = 10
 Group3.movementModel = FMIPolygon
-Group3.routeFile = data/first_effort/first_effort_route.wkt
+Group3.routeFile = data/mapInfo/route.wkt
 Group3.role = STUDENT
 Group3.healthStatus = HEALTHY
 
